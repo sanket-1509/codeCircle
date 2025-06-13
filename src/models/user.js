@@ -68,6 +68,9 @@ const userSchema = mongoose.Schema(
     skills:{
         type:[String],
         // require:true
+    },
+    about:{
+      type:String,
     }
   },
   { timestamps: true }

@@ -1,0 +1,10 @@
+
+const validateProfileEditData = (req) => {
+  const allowedUpdate = ["photoUrl", "gender", "age","about"];
+  const isUpdateAllowed = Object.keys(req.body).every((k) =>
+    allowedUpdate.includes(k)
+  );
+  return isUpdateAllowed
+};
+
+module.exports = validateProfileEditData;
