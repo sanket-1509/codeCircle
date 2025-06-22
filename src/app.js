@@ -9,13 +9,15 @@ const requestsRouter = require("./Routes/requests");
 const userRouter = require("./Routes/user");
 const cors=require('cors')
 
+const cors = require("cors");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true,
+    origin: "http://13.48.149.20", // deployed frontend IP, as port 80 is def port for http req, so need to append it after ip
+    credentials: true              // allow cookies to be sent
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 app.use("/", authRouter);
