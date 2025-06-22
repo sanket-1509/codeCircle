@@ -36,7 +36,7 @@ authRouter.post("/login", async (req, res) => {
       const token = await user.getJWT();
       res.cookie("token", token, {
         httpOnly: true,
-        secure: true, // true in production with HTTPS
+        secure: false, // true in production with HTTPS
         maxAge: 1000 * 60 * 60, // 1 hour
       });
       res.status(200).send(user);
