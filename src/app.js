@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const connectDb = require("./config/database");
@@ -11,7 +12,9 @@ const cors=require('cors');
 
 app.use(
   cors({
+    
     origin: "http://13.48.149.20", // deployed frontend IP, as port 80 is def port for http req, so need to append it after ip
+    //  origin: "http://localhost:5173", 
     credentials: true              // allow cookies to be sent
   })
 );
@@ -86,8 +89,8 @@ app.patch("/user/:userId", async (req, res) => {
 
 connectDb()
   .then(() => {
-    app.listen(3000, () => {
-      console.log("server listening to port 3000");
+    app.listen(process.env.PORT, () => {
+      console.log("server listening to port",process.env.PORT);
     });
   })
   .catch((err) => {

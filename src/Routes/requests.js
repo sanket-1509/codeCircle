@@ -3,6 +3,7 @@ const requestsRouter = express.Router();
 const { auth } = require("../middlewares/auth");
 const { User } = require("../models/user");
 const ConnectionRequest = require("../models/connectionRequest");
+const sendMail = require("../utils/sendEmail");
 
 requestsRouter.post(
   "/request/send/:status/:toUserId",
@@ -10,7 +11,7 @@ requestsRouter.post(
   async (req, res) => {
     try {
       const fromUserId = req.user._id;
-      const toUserId = req.params.toUserId;
+            const toUserId = req.params.toUserId;
       const status = req.params.status;
       const allowedStatus = ["interested", "ignored"];
       if (!allowedStatus.includes(status)) {
@@ -36,12 +37,13 @@ requestsRouter.post(
         status,
       });
       const data = await connectionRequest.save();
-
+      const emailRes = await sendMail.run("New Friend Request Alert","Heyy "+req.user.firstName+", you received new friend request from "+toUser.firstName);
       res.status(201).json({
         message: "connection request sent successfull",
         data,
       });
     } catch (error) {
+      console.error("Request error:", error);
       res.status(400).json({
         message: error.message,
       });

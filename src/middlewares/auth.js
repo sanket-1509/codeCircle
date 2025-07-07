@@ -1,13 +1,12 @@
 const jwt = require("jsonwebtoken");
 const { User } = require("../models/user");
-
 const auth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) {
       return res.status(401).send("Please Login");
     }
-    const decodedPayload = await jwt.verify(token, "temp");
+    const decodedPayload = await jwt.verify(token, process.env.JWT_SECRET);
     const { id } = decodedPayload;
     if (!id) {
       throw new Error("Invalid JWT");
